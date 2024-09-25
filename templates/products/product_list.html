@@ -1,0 +1,55 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<h1 class="mt-5 text-center">Products Under 200</h1>
+<div class="row">
+    {% for product in under_200 %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="{{ product.featured_image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">
+                    Price:
+                    {% if product.discount_price %}
+                        <del>{{ product.price|floatformat:2 }}</del>
+                        <strong>{{ product.discount_price|floatformat:2 }}</strong>
+                    {% else %}
+                        <strong>{{ product.price|floatformat:2 }}</strong>
+                    {% endif %}
+                </p>
+                <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No products available under 200.</p>
+    {% endfor %}
+</div>
+
+<h1 class="mt-5 text-center">Products 200 and Above</h1>
+<div class="row">
+    {% for product in over_200 %}
+    <div class="col-md-4">
+        <div class="card mb-4 shadow-sm">
+            <img src="{{ product.featured_image.url }}" class="card-img-top" alt="{{ product.name }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ product.name }}</h5>
+                <p class="card-text">
+                    Price:
+                    {% if product.discount_price %}
+                        <del>{{ product.price|floatformat:2 }}</del>
+                        <strong>{{ product.discount_price|floatformat:2 }}</strong>
+                    {% else %}
+                        <strong>{{ product.price|floatformat:2 }}</strong>
+                    {% endif %}
+                </p>
+                <a href="{% url 'product_detail' product.pk %}" class="btn btn-primary">View Details</a>
+            </div>
+        </div>
+    </div>
+    {% empty %}
+    <p>No products available at or above 200.</p>
+    {% endfor %}
+</div>
+{% endblock %}

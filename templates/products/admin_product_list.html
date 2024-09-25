@@ -1,0 +1,35 @@
+{% extends 'products/base.html' %}
+
+{% block content %}
+<h1 class="mt-5">Admin - Product List</h1>
+<a href="{% url 'admin_product_create' %}" class="btn btn-success mb-3">Add New Product</a>
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Discount Price</th>
+            <th>Status</th>
+            <th>Actions</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for product in products %}
+        <tr>
+            <td>{{ product.name }}</td>
+            <td>{{ product.price|floatformat:2 }}</td>
+            <td>{{ product.discount_price|default:"-"|floatformat:2 }}</td>
+            <td>{{ product.get_status_display }}</td>
+            <td>
+                <a href="{% url 'admin_product_update' product.pk %}" class="btn btn-primary btn-sm">Edit</a>
+                <a href="{% url 'admin_product_delete' product.pk %}" class="btn btn-danger btn-sm">Delete</a>
+            </td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="5">No products available.</td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+{% endblock %}
